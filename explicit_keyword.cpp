@@ -16,10 +16,10 @@ public:
         interest = (principal * rate * time) / 100;
     }
     void display() {
-        cout << "Principal = " << principal << endl;
-        cout << "Rate      = " << rate << endl;
+        cout << "Principal = Rs " << principal << endl;
+        cout << "Rate      = " << rate << "%" << endl;
         cout << "Time      = " << time << endl;
-        cout << "Simple Interest = " << interest << endl;
+        cout << "Simple Interest = Rs " << interest << endl;
     }
 };
 int main() {
