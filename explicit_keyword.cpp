@@ -1,37 +1,65 @@
 #include <iostream>
 using namespace std;
-class SimpleInterest {
+
+// Allows implicit conversions from double to Distance
+class Distance {
 private:
-    double principal;
-    double rate;
-    double time;
-    double interest;
+    double meters;   
+
 public:
-    // Explicit constructor prevents implicit conversions
-    // e.g. SimpleInterest si = 5000; would be an ERROR because of 'explicit'
-    explicit SimpleInterest(double p, double r = 0, double t = 0) {
-        principal = p;
-        rate = r;
-        time = t;
-        interest = (principal * rate * time) / 100;
+    Distance(double m) {         
+        meters = m;
+        cout << "Distance created: " << meters << "m" << endl;
     }
-    void display() {
-        cout << "Principal = Rs " << principal << endl;
-        cout << "Rate      = " << rate << "%" << endl;
-        cout << "Time      = " << time << endl;
-        cout << "Simple Interest = Rs " << interest << endl;
+
+    double getMeters() const {    
+        return meters;
     }
 };
+
+// Prevents implicit conversions due to 'explicit'
+class SafeDistance {
+private:
+    double meters;  
+
+public:
+    explicit SafeDistance(double m) {   
+        meters = m;
+        cout << "SafeDistance created: " << meters << "m" << endl;
+    }
+
+    double getMeters() const {   
+        return meters;
+    }
+};
+
+void printDistance(Distance d) {
+    cout << "Printing: " << d.getMeters() << "m" << endl;
+}
+
+void printSafeDistance(SafeDistance d) {
+    cout << "Printing: " << d.getMeters() << "m" << endl;
+}
+
 int main() {
-    double p, r, t;
-    cout << "Enter Principal Amount: ";
-    cin >> p;
-    cout << "Enter Rate of Interest: ";
-    cin >> r;
-    cout << "Enter Time (in years): ";
-    cin >> t;
-    // Must call constructor explicitly with all arguments
-    SimpleInterest si(p, r, t);
-    si.display();
+    // Implicit conversion (double -> Distance)
+    Distance d1 = 10.5;        
+    
+    // Implicitly wraps 25.0 into a Distance object
+    printDistance(25.0);       
+    
+    cout << "d1 meters: " << d1.getMeters() << endl;
+
+    // Direct initialization
+    SafeDistance d2(10.5);            
+    
+    // Explicit constructor call
+    SafeDistance d3 = SafeDistance(10.5); 
+
+    // Must construct explicitly; SafeDistance d4 = 10.5; would fail
+    printSafeDistance(SafeDistance(25.0));  
+
+    cout << "d2 meters: " << d2.getMeters() << endl;
+
     return 0;
 }
